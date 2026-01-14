@@ -2,14 +2,14 @@ package routes
 
 import (
 	"net/http"
-
-	tools "github.com/muskiteer/GoCP/tools/fetching_crypto"
+	"github.com/muskiteer/GoCP/handler"
+	
 )
 
 func SetupRoutes(mux *http.ServeMux) {
 
-	mux.HandleFunc("/health", healthcheckHandler)
-	mux.HandleFunc("/tools_Prompts", toolsPromptsHandler)
-	mux.HandleFunc("/tools_execution", toolsExecutionHandler)
+	mux.HandleFunc("/health", handler.HealthcheckHandler)
+	mux.HandleFunc("/tools/prompt", handler.ToolsPromptsHandler)
+	mux.HandleFunc("/tools/execution", handler.ToolsExecutionHandler)
 }
 

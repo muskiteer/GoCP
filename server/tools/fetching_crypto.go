@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"context"
 )
 
 
-func FetchCryptoData(coin string, currency string) (float64, error) {
+func FetchCryptoData(ctx context.Context, args map[string]any) (any, error) {
+	coin, _ := args["coin"].(string)
+	currency, _ := args["currency"].(string)
 	url := fmt.Sprintf("https://api.coingecko.com/api/v3/simple/price?ids=%s&vs_currencies=%s", coin, currency)
 	resp, err := http.Get(url)
 	if err != nil {

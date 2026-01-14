@@ -1,0 +1,19 @@
+{
+    "tools" : [
+        {
+            "name": "fetching_crypto",
+            "description": "A tool to fetch cryptocurrency prices.",
+            "arguments" : {
+                "crypto_symbol": {
+                    "type": "string",
+                    "description": "The symbol of the cryptocurrency (e.g., BTC for Bitcoin, ETH for Ethereum)."
+                },
+                "currency": {
+                    "type": "string",
+                    "description": "The fiat currency to convert the cryptocurrency price into (e.g., USD, EUR)."
+                }
+            }
+        }
+    ]
+}
+
