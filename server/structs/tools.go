@@ -4,20 +4,20 @@ import (
 	"context"
 )
 
-type ToolManifest struct {
-	Tools []ToolSpec `json:"tools"`
-}
+	type ToolManifest struct {
+		Tools []ToolSpec `json:"tools"`
+	}
 
-type ToolSpec struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Arguments   map[string]ToolArguments `json:"arguments"`
-}	
+	type ToolSpec struct {
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Arguments   map[string]ToolArguments `json:"arguments"`
+	}	
 
-type ToolArguments struct {
-	Type     string `json:"type"`
-	Description string `json:"description"`
-}
+	type ToolArguments struct {
+		Type     string `json:"type"`
+		Description string `json:"description"`
+	}
 
 type Tool struct {
     Spec     ToolSpec

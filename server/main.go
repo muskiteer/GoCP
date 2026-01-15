@@ -1,38 +1,28 @@
 package main
 
 import (
-    // "net/http"
-	// "github.com/muskiteer/GoCP/routes"
-	"github.com/muskiteer/GoCP/registery"
 	"log"
-	"context"
+	"net/http"
+	"github.com/muskiteer/GoCP/routes"
+	"github.com/muskiteer/GoCP/prompts"
+	// "os"
+	// "context"
+	
+	// "net/http"
+	// "github.com/muskiteer/GoCP/registery"
 )
 
 func main() {
-	ctx := context.Background()
-
-// 	mux := http.NewServeMux()
-// 	routes.SetupRoutes(mux)
-	 manifest, err := registery.LoadToolManifest("/home/muskiteer/Desktop/GoCP/server/schema/tools.json")
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    registry, err := registery.InitRegistry(manifest)
-    if err != nil {
-        log.Fatal(err)
-    }
-	result, err := registry.Execute(
-		ctx,
-		// context.Background(),
-		"fetching_crypto",
-		map[string]any{
-			"coin":     "bitcoin",
-			"currency": "usd",
-		},
-	)
+	
+	tools_prompt, err := prompts.ToolPromptGenerator()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Could not read tools_available.txt file: ", err)
 	}
-	log.Println(result);
+	mux:= http.NewServeMux()
+	routes.SetupRoutes(mux, tools_prompt)
+	log.Println("Server is running on :8080")
+	if err := http.ListenAndServe(":8080", mux); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
+	
 }

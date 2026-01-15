@@ -2,7 +2,11 @@ package handler
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"strings"
+
+	"github.com/muskiteer/GoCP/structs"
 )
 
 func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {
@@ -10,10 +14,41 @@ func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
 }
 
-func ToolsPromptsHandler(w http.ResponseWriter, r *http.Request) {
-	// Placeholder for tools prompts handling logic
+func StartSession(w http.ResponseWriter, r *http.Request) {
+	// Placeholder for session initialization logic
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"message": "Tools Prompts Handler"})
+	json.NewEncoder(w).Encode(map[string]string{"message": "Session Started"})
+}
+
+func ToolsPromptsHandler(w http.ResponseWriter, r *http.Request, tools_prompt string) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var prompt structs.PromptRequest
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	err := decoder.Decode(&prompt)		
+
+	if err!= nil {
+		http.Error(w, "Bad Request", http.StatusBadRequest)
+		log.Println("Error decoding prompt request in ToolsPromptsHandler:", err)
+		return
+	}
+	if strings.TrimSpace(prompt.Prompt) == "" {
+		http.Error(w, "Prompt is required", http.StatusBadRequest)
+		log.Println("Prompt is empty in ToolsPromptsHandler")
+		return
+	}
+
+	finalPrompt := tools_prompt + "\nUser Prompt: " + prompt.Prompt
+
+	var response = map[string]string{
+		"prompt_tools": finalPrompt,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)	
+	
 }
 
 func ToolsExecutionHandler(w http.ResponseWriter, r *http.Request) {

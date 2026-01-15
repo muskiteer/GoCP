@@ -1,6 +1,0 @@
-package logs
-
-import (
-	
-)
-
