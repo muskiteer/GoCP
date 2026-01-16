@@ -4,9 +4,9 @@
             "name": "fetching_crypto",
             "description": "A tool to fetch cryptocurrency prices.",
             "arguments" : {
-                "crypto_symbol": {
+                "crypto_name": {
                     "type": "string",
-                    "description": "The symbol of the cryptocurrency (e.g., BTC for Bitcoin, ETH for Ethereum)."
+                    "description": "name of the cryptocurrency (e.g.,bitcoin, ethereum)."
                 },
                 "currency": {
                     "type": "string",
