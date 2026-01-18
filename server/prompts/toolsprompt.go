@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"fmt"
 	"strings"
-	"github.com/muskiteer/GoCP/structs"
+	"github.com/muskiteer/GoCP/server/structs"
 )
 
 func ToolPromptGenerator() (string, error) {

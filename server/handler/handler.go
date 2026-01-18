@@ -6,8 +6,8 @@ import (
 	"context"
 	"net/http"
 	"strings"
-	"github.com/muskiteer/GoCP/registery"
-	"github.com/muskiteer/GoCP/structs"
+	"github.com/muskiteer/GoCP/server/registery"
+	"github.com/muskiteer/GoCP/server/structs"
 )
 
 func HealthcheckHandler(w http.ResponseWriter, r *http.Request) {

@@ -1,8 +1,8 @@
 package registery
 
 import (
-	"github.com/muskiteer/GoCP/structs"
-	"github.com/muskiteer/GoCP/tools"
+	"github.com/muskiteer/GoCP/server/structs"
+	"github.com/muskiteer/GoCP/server/tools"
 	"encoding/json"
 	"os"
 	"fmt"

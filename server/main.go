@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
-	"github.com/muskiteer/GoCP/routes"
-	"github.com/muskiteer/GoCP/prompts"
+	"github.com/muskiteer/GoCP/server/routes"
+	"github.com/muskiteer/GoCP/server/prompts"
 	// "github.com/muskiteer/GoCP/structs"
-	"github.com/muskiteer/GoCP/registery"
+	"github.com/muskiteer/GoCP/server/registery"
 	// "os"
 	"context"
 	

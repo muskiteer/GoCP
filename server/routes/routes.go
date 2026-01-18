@@ -2,8 +2,8 @@ package routes
 
 import (
 	"net/http"
-	"github.com/muskiteer/GoCP/handler"
-	"github.com/muskiteer/GoCP/registery"
+	"github.com/muskiteer/GoCP/server/handler"
+	"github.com/muskiteer/GoCP/server/registery"
 	"context"
 	
 )

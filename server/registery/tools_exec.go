@@ -1,7 +1,7 @@
 package registery
 
 import (
-	"github.com/muskiteer/GoCP/structs"
+	"github.com/muskiteer/GoCP/server/structs"
 	"context"
 	// "github.com/muskiteer/GoCP/tools"
 	"strings"
