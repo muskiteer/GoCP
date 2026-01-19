@@ -3,25 +3,24 @@ package main
 import (
 	"log"
 	"github.com/muskiteer/GoCP/client/internals"
+	"github.com/joho/godotenv"
 )
-
-type TagsResponse struct {
-	Models []struct {
-		Name string `json:"name"`
-	} `json:"models"`
-}
-
 
 
 func main() {
 	log.SetFlags(0)
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("No env file found")
+	}
 
 	models, err := internals.FetchModels()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("✅ Ollama server is running")
+	log.Println("Ollama server is running")
 
 	model, err := internals.SelectModel(models)
 	if err != nil {
@@ -29,5 +28,11 @@ func main() {
 	}
 
 	log.Printf("Using model: %s\n", model)
+	
+	log.Println("Starting chat session. Type 'exit' to quit.")
+	err = internals.ChatSession(model)
+	if err != nil {
+		log.Fatal(err)
+	}
 	
 }

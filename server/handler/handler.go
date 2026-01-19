@@ -5,7 +5,6 @@ import (
 	"log"
 	"context"
 	"net/http"
-	"strings"
 	"github.com/muskiteer/GoCP/server/registery"
 	"github.com/muskiteer/GoCP/server/structs"
 )
@@ -22,30 +21,13 @@ func StartSession(w http.ResponseWriter, r *http.Request) {
 }
 
 func ToolsPromptsHandler(w http.ResponseWriter, r *http.Request, tools_prompt string) {
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	var prompt structs.PromptRequest
-	decoder := json.NewDecoder(r.Body)
-	decoder.DisallowUnknownFields()
-	err := decoder.Decode(&prompt)		
-
-	if err!= nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		log.Println("Error decoding prompt request in ToolsPromptsHandler:", err)
-		return
-	}
-	if strings.TrimSpace(prompt.Prompt) == "" {
-		http.Error(w, "Prompt is required", http.StatusBadRequest)
-		log.Println("Prompt is empty in ToolsPromptsHandler")
-		return
-	}
-
-	finalPrompt := tools_prompt + "\nUser Prompt: " + prompt.Prompt
-
+	
 	var response = map[string]string{
-		"prompt_tools": finalPrompt,
+		"prompt_tools": tools_prompt,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)	
