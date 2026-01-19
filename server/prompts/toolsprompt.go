@@ -53,6 +53,8 @@ If you decide to call a tool:
   }
 }
 
+DO NOT USE TEXT IF USING A TOOL. THIS IS VERY IMPORTANT.
+
 If you do NOT need a tool:
 - Respond normally in plain text
 - Do NOT return JSON

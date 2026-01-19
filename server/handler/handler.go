@@ -48,7 +48,7 @@ func ToolsExecutionHandler(w http.ResponseWriter, r *http.Request, registry regi
 		log.Println("Error in ToolsExecutionHandler:", err)
 		return
 	}
-
+	
 	var response = map[string]string{
 		"tools_response": response_str,
 	}
