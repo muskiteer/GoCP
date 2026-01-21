@@ -30,8 +30,7 @@ func ToolsPromptsHandler(w http.ResponseWriter, r *http.Request, tools_prompt st
 		"prompt_tools": tools_prompt,
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)	
-	
+	json.NewEncoder(w).Encode(response)		
 }
 
 func ToolsExecutionHandler(w http.ResponseWriter, r *http.Request, registry registery.Registry, ctx context.Context) {
@@ -41,6 +40,7 @@ func ToolsExecutionHandler(w http.ResponseWriter, r *http.Request, registry regi
 	}
 	var tools_needed structs.ToolExecute
 	json.NewDecoder(r.Body).Decode(&tools_needed)
+	log.Println("Received tool execution request for tool:", tools_needed.ToolName)
 	
 	response_str, err := registery.ToolsExec(ctx, tools_needed, &registry)
 	if err != nil {

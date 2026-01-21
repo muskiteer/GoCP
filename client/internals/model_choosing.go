@@ -23,7 +23,7 @@ func FetchModels() ([]string, error) {
 	if err := json.NewDecoder(resp.Body).Decode(&tags); err != nil {
 		return nil, err
 	}
-
+	
 	if len(tags.Models) == 0 {
 		return nil, fmt.Errorf("no models found (run: ollama pull <model>)")
 	}

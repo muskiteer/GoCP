@@ -55,13 +55,13 @@
 					Role:    "assistant",
 					Content: response,
 				})
+				
 				continue
 			}
 			messages.Messages = append(messages.Messages, structs.OllamaMessages{
 				Role:    "assistant",
 				Content: response,
 			})
-			
 			final_response, err := ollama.GetFinalResponse(response,cmd, &messages)
 			if err != nil || final_response == "" {
 				return err

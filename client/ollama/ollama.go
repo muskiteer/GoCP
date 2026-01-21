@@ -84,7 +84,7 @@ messages.Messages = append(
 		return "", fmt.Errorf("Ollama server returned non-OK status: %d", resp.StatusCode)
 	}
 
-		var result structs.OllamaChatToolResponse
+	var result structs.OllamaChatToolResponse
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", err
 	}

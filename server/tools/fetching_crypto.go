@@ -9,7 +9,6 @@ import (
 
 )
 
-
 func FetchCryptoData(ctx context.Context, args map[string]any) (any, error) {
 	
 	coin, ok := args["crypto_name"].(string)

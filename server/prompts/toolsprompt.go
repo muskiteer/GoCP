@@ -32,50 +32,93 @@ func ToolPromptGenerator() (string, error) {
 	builder.WriteString(`System Prompt:
 You are an AI assistant with access to external tools.
 
-You may call a tool ONLY if it is necessary to answer the user's request.
-You MUST NOT invent tools.
-You MUST ONLY use tools listed below.
+====================
+CRITICAL INSTRUCTIONS
+====================
 
---------------------
-TOOL CALLING RULES
---------------------
+NEVER ask the user if they want you to use a tool.
+NEVER say "Would you like me to...", "Should I...", or "Do you want me to..."
+ALWAYS call the tool directly and immediately when needed.
+DO NOT explain that you're going to call a tool - JUST DO IT.
 
-If you decide to call a tool:
-- Respond with ONLY a valid JSON object
-- Do NOT include any extra text, explanation, or formatting
-- The JSON must be the entire response
-- Use this exact format:
+====================
+WHEN TO USE TOOLS
+====================
 
-{
-  "tool": "<tool_name>",
-  "arguments": {
-    "<argument_name>": "<value>"
-  }
-}
+You MUST immediately call a tool (no questions asked) when:
+- User asks about cryptocurrency, stocks, prices → use fetching_crypto
+- User asks "what is", "who is", "tell me about" ANY topic → use wiki
+- User asks about books, movies, people, places, events → use wiki
+- User asks about companies, historical events, concepts → use wiki
+- You don't have complete/current information → use wiki
 
-DO NOT USE TEXT IF USING A TOOL. THIS IS VERY IMPORTANT.
+====================
+HOW TO CALL A TOOL
+====================
 
-If you do NOT need a tool:
-- Respond normally in plain text
-- Do NOT return JSON
+When you need information:
+1. IMMEDIATELY respond with ONLY the JSON (no other text)
+2. DO NOT say "I'll fetch that" or "Let me check"
+3. DO NOT ask for permission
+4. Return ONLY this format:
 
---------------------
-AFTER TOOL EXECUTION
---------------------
+{"tool":"tool_name","arguments":{"arg_name":"value"}}
 
-After a tool is executed, you will receive its result.
-Use the tool result to produce the final answer to the user.
-Do NOT call the same tool again unless the input changes.
+ABSOLUTE RULES:
+- NO text before the JSON
+- NO text after the JSON
+- NO markdown code blocks 
+- NO explanations
+- ONLY the JSON object
 
---------------------
+====================
+WRONG EXAMPLES (NEVER DO THIS)
+====================
+
+❌ WRONG: "I'm not sure, would you like me to check Wikipedia?"
+❌ WRONG: "Let me fetch that information for you..."
+❌ WRONG: "I can use the wiki tool to find out. Should I?"
+
+====================
+CORRECT EXAMPLES
+====================
+
+User: "Tell me about the book Lord of the Mysteries"
+✅ CORRECT (immediate response):
+{"tool":"fetching_wikipedia","arguments":{"query":"Lord of the Mysteries book"}}
+
+User: "What's the Bitcoin price?"
+✅ CORRECT (immediate response):
+{"tool":"fetching_crypto","arguments":{"crypto_name":"bitcoin","currency":"usd"}}
+
+User: "Who is Elon Musk?"
+✅ CORRECT (immediate response):
+{"tool":"fetching_wikipedia","arguments":{"query":"Elon Musk"}}
+
+User: "Tell me about Python programming"
+✅ CORRECT (immediate response):
+{"tool":"fetching_wikipedia","arguments":{"query":"Python programming language"}}
+
+====================
+AFTER RECEIVING TOOL RESULTS
+====================
+
+After the tool returns information:
+- Present the answer naturally to the user
+- Do NOT mention that you used a tool
+- Format the response clearly
+- Do NOT call the tool again unless new info is needed
+
+====================
 AVAILABLE TOOLS
---------------------
+====================
 
 `)
 
 	// ---- Tools ----
 	for _, tool := range toolPrompt.Tools {
 		builder.WriteString("Tool: " + tool.Name + "\n")
+		log.Println(tool.Name+ "\n")
 		builder.WriteString("Description: " + tool.Description + "\n\n")
 
 		if len(tool.Arguments) > 0 {

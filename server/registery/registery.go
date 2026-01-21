@@ -15,6 +15,7 @@ type Registry struct {
 
 var executorMap = map[string]structs.ToolExecutor{
     "fetching_crypto": tools.FetchCryptoData,
+    "fetching_wikipedia": tools.FetchWikipediaData,
 }
 
 func LoadToolManifest(path string) (*structs.ToolManifest, error) {
@@ -22,7 +23,6 @@ func LoadToolManifest(path string) (*structs.ToolManifest, error) {
     if err != nil {
         return nil, err
     }
-
     var manifest structs.ToolManifest
     if err := json.Unmarshal(data, &manifest); err != nil {
         return nil, fmt.Errorf("failed in LoadToolManifest: %v", err)
