@@ -18,7 +18,7 @@
             "name": "fetching_wikipedia",
             "description": "Fetches factual information from Wikipedia by converting a natural-language question into the most relevant Wikipedia page and returning its summary.",
             "arguments": {
-                "question": {
+                "query": {
                 "type": "string",
                 "description": "A natural-language question or query (e.g., 'what is golang', 'who invented linux')."
                 }

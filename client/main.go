@@ -2,18 +2,21 @@ package main
 
 import (
 	"log"
-	"github.com/muskiteer/GoCP/client/internals"
 	"github.com/joho/godotenv"
+	"github.com/muskiteer/GoCP/client/internals"
 )
 
 
 func main() {
 	log.SetFlags(0)
 
+	
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("No env file found")
 	}
+
 
 	models, err := internals.FetchModels()
 	if err != nil {
@@ -33,6 +36,5 @@ func main() {
 	err = internals.ChatSession(model)
 	if err != nil {
 		log.Fatal(err)
-	}
-	
+	}	
 }

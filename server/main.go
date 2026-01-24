@@ -3,13 +3,15 @@ package main
 import (
 	"log"
 	"net/http"
+	"context"
 	"github.com/muskiteer/GoCP/server/routes"
 	"github.com/muskiteer/GoCP/server/prompts"
 	"github.com/muskiteer/GoCP/server/registery"
-	"context"
+	// "github.com/joho/godotenv"
 )
 
 func main() {
+	
 	ctx := context.Background()
 	path := "/home/muskiteer/Desktop/GoCP/server/schema/tools.json"
 	manifest, err := registery.LoadToolManifest(path)

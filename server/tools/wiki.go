@@ -96,11 +96,11 @@ func fetchSummary(title string) (*summaryResponse, error) {
 
 
 func FetchWikipediaData(ctx context.Context, args map[string]any) (any, error){
-	question, ok := args["question"].(string)
-	if !ok || question == "" {
-		return nil, fmt.Errorf("question must be a non-empty string")
+	query, ok := args["query"].(string)
+	if !ok || query == "" {
+		return nil, fmt.Errorf("query must be a non-empty string")
 	}
-	title, err := searchTitle(question)
+	title, err := searchTitle(query)
 	if err != nil {
 		return nil, err
 	}
