@@ -15,8 +15,8 @@
             }
         },
             {
-            "name": "fetching_wikipedia",
-            "description": "Fetches factual information from Wikipedia by converting a natural-language question into the most relevant Wikipedia page and returning its summary.",
+            "name": "search_online",
+            "description": "Retrieves contextual background information from multiple public knowledge sources such as Wikipedia and curated web search results. The returned data may include overlapping or complementary perspectives. Use this tool to gather broad context, then synthesize a clear, accurate answer. Prefer Wikipedia information when sources conflict.",
             "arguments": {
                 "query": {
                 "type": "string",

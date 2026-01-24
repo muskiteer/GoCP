@@ -59,7 +59,7 @@ messages.Messages = append(
 	messages.Messages,
 	structs.OllamaMessages{
 		Role:    "tool",
-		Content: toolAnw,
+		Content: "The following information was retrieved using an external tool. Use it ONLY to answer the user's question directly.\n\n" + toolAnw,
 	},
 )
 

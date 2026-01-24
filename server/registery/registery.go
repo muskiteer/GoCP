@@ -15,7 +15,7 @@ type Registry struct {
 
 var executorMap = map[string]structs.ToolExecutor{
     "fetching_crypto": tools.FetchCryptoData,
-    "fetching_wikipedia": tools.FetchWikipediaData,
+    "search_online": tools.FetchonlineData,
 }
 
 func LoadToolManifest(path string) (*structs.ToolManifest, error) {

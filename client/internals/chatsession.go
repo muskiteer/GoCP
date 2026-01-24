@@ -48,30 +48,35 @@
 			if err != nil || response == "" {
 				return err
 			}
+			log.Println(" 111111111111. first from Ollama:", response)
 
 			if(functions.IsToolCall(response)==false){
 				fmt.Println(response)
-				messages.Messages = append(messages.Messages, structs.OllamaMessages{
-					Role:    "assistant",
-					Content: response,
-				})
+				messages.Messages = messages.Messages[:1]
+				// messages.Messages = append(messages.Messages, structs.OllamaMessages{
+				// 	Role:    "assistant",
+				// 	Content: response,
+				// })
 				
 				continue
 			}
-			messages.Messages = append(messages.Messages, structs.OllamaMessages{
-				Role:    "assistant",
-				Content: response,
-			})
+			// messages.Messages = append(messages.Messages, structs.OllamaMessages{
+			// 	Role:    "assistant",
+			// 	Content: response,
+			// })
 			final_response, err := ollama.GetFinalResponse(response,cmd, &messages)
 			if err != nil || final_response == "" {
 				return err
 			}
+			log.Println(" 22222222222. final from Ollama:", final_response)
 			
 			fmt.Println(final_response)
-			messages.Messages = append(messages.Messages, structs.OllamaMessages{
-				Role:    "assistant",
-				Content: final_response,
-			})
+			// messages.Messages = append(messages.Messages, structs.OllamaMessages{
+			// 	Role:    "assistant",
+			// 	Content: final_response,
+			// })
+			messages.Messages = messages.Messages[:1] // keep system only
+
 			
 		}
 		return nil
