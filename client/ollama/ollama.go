@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"bytes"
 	"os"
+	
 	"github.com/muskiteer/GoCP/client/structs"
 	"github.com/muskiteer/GoCP/client/functions"
 )

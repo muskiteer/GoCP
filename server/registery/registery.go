@@ -1,12 +1,13 @@
 package registery
 
 import (
-	"github.com/muskiteer/GoCP/server/structs"
-	"github.com/muskiteer/GoCP/server/tools"
-	"encoding/json"
+    "encoding/json"
 	"os"
 	"fmt"
 	"context"
+    
+    "github.com/muskiteer/GoCP/server/structs"
+    "github.com/muskiteer/GoCP/server/tools"
 )
 
 type Registry struct {

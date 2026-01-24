@@ -4,10 +4,11 @@ import (
 	"log"
 	"net/http"
 	"context"
+	
 	"github.com/muskiteer/GoCP/server/routes"
 	"github.com/muskiteer/GoCP/server/prompts"
 	"github.com/muskiteer/GoCP/server/registery"
-	// "github.com/joho/godotenv"
+	
 )
 
 func main() {

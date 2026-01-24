@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
 	"github.com/muskiteer/GoCP/client/structs"
+	
 	"github.com/manifoldco/promptui"
 )
 
