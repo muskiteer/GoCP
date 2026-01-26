@@ -92,3 +92,27 @@ messages.Messages = append(
 
 	return result.Message.Content, nil
 }
+
+func Embed(text string) ([]float64, error) {
+	req := map[string]any{
+		"model":  "nomic-embed-text",
+		"prompt": text,
+	}	
+
+	body, _ := json.Marshal(req)
+
+	resp, err := http.Post(
+		"http://localhost:11434/api/embeddings",
+		"application/json",
+		bytes.NewBuffer(body),
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var result structs.EmbeddingResponse
+	json.NewDecoder(resp.Body).Decode(&result)
+
+	return result.Embedding, nil
+}

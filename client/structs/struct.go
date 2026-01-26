@@ -34,4 +34,15 @@ type ToolExecute struct {
 	Arguments map[string]any `json:"arguments"`
 }
 
+type EmbeddingResponse struct {
+	Embedding []float64 `json:"embedding"`
+}
+
+type ChunkEmbedding struct {
+	Text      string
+	Vector    []float64
+}
+
+var MemoryStore []ChunkEmbedding
+
 
