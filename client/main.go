@@ -4,7 +4,9 @@ import (
 	"log"
 	"github.com/joho/godotenv"
 	"github.com/muskiteer/GoCP/client/internals"
+	"github.com/muskiteer/GoCP/client/internals/chat"
 )
+
 
 
 func main() {
@@ -33,7 +35,7 @@ func main() {
 	log.Printf("Using model: %s\n", model)
 	
 	log.Println("Starting chat session. Type 'exit' to quit.")
-	err = internals.ChatSession(model)
+	err = chat.ChatSession(model)
 	if err != nil {
 		log.Fatal(err)
 	}	

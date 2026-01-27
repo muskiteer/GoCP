@@ -3,6 +3,8 @@ package internals
 import (
 	"regexp"
 	"strings"
+	"github.com/ledongthuc/pdf"
+	"bytes"
 )
 
 func CleanText(s string) string {
@@ -13,17 +15,22 @@ func CleanText(s string) string {
 }
 
 
-func ChunkText(text string, size, overlap int) []string {
-	var chunks []string
-	runes := []rune(text)
 
-	for i := 0; i < len(runes); i += size - overlap {
-		end := i + size
-		if end > len(runes) {
-			end = len(runes)
-		}
-		chunks = append(chunks, string(runes[i:end]))
+func ExtractPDFText(path string) (string, error) {
+	f, r, err := pdf.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+
+	var buf bytes.Buffer
+	b, err := r.GetPlainText()
+	if err != nil {
+		return "", err
 	}
 
-	return chunks
+	buf.ReadFrom(b)
+
+	final := CleanText(buf.String())
+	return final, nil
 }

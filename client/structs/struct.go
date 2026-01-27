@@ -43,6 +43,11 @@ type ChunkEmbedding struct {
 	Vector    []float64
 }
 
+type Scored struct {
+	Text  string
+	Score float64
+}
+
 var MemoryStore []ChunkEmbedding
 
 

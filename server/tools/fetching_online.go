@@ -3,7 +3,6 @@ package tools
 import (
 	"context"
 	"fmt"
-	"log"
 
 	tools_internals "github.com/muskiteer/GoCP/server/tool_internals"
 )
@@ -37,7 +36,7 @@ func FetchonlineData(ctx context.Context, args map[string]any) (any, error) {
 		wiki,
 		duck,
 	)
-	log.Println(result)
+
 
 	return result, nil
 }

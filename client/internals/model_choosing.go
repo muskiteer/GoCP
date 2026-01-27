@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/muskiteer/GoCP/client/structs"
 	
@@ -32,6 +33,9 @@ func FetchModels() ([]string, error) {
 
 	var models []string
 	for _, m := range tags.Models {
+		if strings.HasPrefix(m.Name, "nomic-embed-text") {
+			continue
+		}
 		models = append(models, m.Name)
 	}
 
