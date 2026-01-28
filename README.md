@@ -115,6 +115,12 @@ GoCP> rag it
 [📄 RAG Context Retrieved]
 ```
 
+**To Exit**
+```
+GoCP> exit
+
+```
+
 ## 🛠️ Available Tools
 
 | Tool | Purpose |
