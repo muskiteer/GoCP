@@ -1,337 +1,176 @@
-# GoCP - Go Copilot with Tool Calling
+# GoCP — Go Copilot with RAG & Tool Calling
 
-A Go-based AI assistant that integrates with Ollama LLMs and provides intelligent tool calling capabilities.
+GoCP is a Go-based AI copilot that works with Ollama LLMs, supporting automatic tool calling and RAG (Retrieval-Augmented Generation) for querying PDFs and live data — all from the terminal.
 
-## Features
+## ✨ Features
 
-- 🤖 **Interactive Chat Interface** - Terminal-based chat with Ollama models
-- 🔧 **Automatic Tool Calling** - AI automatically calls tools without asking permission
-- 📚 **Wikipedia Integration** - Fetch information from Wikipedia
-- 💰 **Cryptocurrency Data** - Get real-time crypto prices
-- 🔄 **Conversation Memory** - Maintains context throughout the session
-- 🎯 **Smart Detection** - Automatically determines when external data is needed
+🤖 Terminal-based AI chat with Ollama
 
-## Architecture
+🔧 Automatic tool calling (Wikipedia, web search, crypto prices)
 
+📄 RAG support for querying PDF documents
+
+🔍 DuckDuckGo web search
+
+💰 Real-time crypto prices via CoinGecko
+
+🧠 Context pruning & conversation memory
+
+🎯 Interactive model selection at startup
+
+## 🏗️ Architecture
 ```
 GoCP/
-├── server/              # Backend server
-│   ├── handler/        # HTTP request handlers
-│   ├── prompts/        # System prompt generation
-│   ├── registery/      # Tool registry and execution
-│   ├── routes/         # API routes
-│   ├── schema/         # Tool definitions (tools.json)
-│   ├── structs/        # Data structures
-│   └── tools/          # Tool implementations
-└── client/             # CLI client
-    ├── functions/      # Tool detection and parsing
-    ├── internals/      # Chat session and model selection
-    ├── ollama/         # Ollama API integration
-    └── structs/        # Client data structures
+├── server/   # Tool execution & APIs (port 8080)
+└── client/   # CLI chat client with RAG
 ```
 
-## Prerequisites
+**Server:** Tool registry, execution engine, APIs
 
-- Go 1.21 or higher
-- Ollama installed and running
-- A compatible Ollama model (llama3.1:8b, qwen2.5:7b, etc.)
+**Client:** Chat UI, Ollama interaction, RAG pipeline
 
-## Installation
+## 📋 Prerequisites
 
-### 1. Install Ollama
+- Go 1.21+
+- Ollama (running locally)
 
+**Recommended Models:**
 ```bash
-# Linux
-curl -fsSL https://ollama.com/install.sh | sh
-
-# Start Ollama service
-ollama serve
-```
-
-### 2. Pull a Compatible Model
-
-```bash
-# Recommended models for tool calling
 ollama pull llama3.1:8b
-# OR
 ollama pull qwen2.5:7b
+ollama pull nomic-embed-text   # Required for RAG
 ```
 
-### 3. Clone and Setup
-
+## 🚀 Installation
 ```bash
-git clone <repository-url>
+git clone <repo-url>
 cd GoCP
 
-# Install server dependencies
+# Build Server
 cd server
-go mod download
+go mod tidy
+go build -o gocp-server
 
-# Install client dependencies
+# Build Client
 cd ../client
-go mod download
+go mod tidy
+go build -o gocp-client
 ```
 
-## Configuration
+## ⚙️ Configuration
 
-### Server Setup
-
-Create `.env` in the `server/` directory (optional):
-
+**server/.env**
 ```env
 PORT=8080
 ```
 
-### Client Setup
-
-Create `.env` in the `client/` directory:
-
+**client/.env**
 ```env
 OLLAMA_API_URL=http://localhost:11434
 SERVER_URL=http://localhost:8080
 ```
 
-## Running the Application
+## ▶️ Running GoCP
 
-### Start the Server
-
+**Terminal 1 — Server**
 ```bash
 cd server
-go run main.go
+./gocp-server
 ```
 
-You should see:
-```
-2026/01/21 14:29:22 Server is running on :8080
-```
-
-### Start the Client
-
-In a new terminal:
-
+**Terminal 2 — Client**
 ```bash
 cd client
-go run main.go
+./gocp-client
 ```
 
-The client will:
-1. Check Ollama connection
-2. Let you select a model
-3. Start the chat session
+You'll be prompted to select a model and can start chatting immediately.
 
-## Usage Examples
+## 💡 Usage Examples
 
-### Basic Chat
-
-```
-GoCP> hello
-Hello! How can I assist you today?
+**Ask Questions (Auto Tool Calling)**
 ```
 
-### Wikipedia Tool (Automatic)
 
+**Crypto Prices**
 ```
-GoCP> tell me about the book Lord of the Mysteries
-[Tool automatically called: fetching_wikipedia]
-
-Lord of the Mysteries is a Chinese web novel written by Cuttlefish That Loves Diving...
+GoCP> What's the Bitcoin price?
+[🔧 Tool Called: Crypto]
 ```
 
-### Cryptocurrency Tool (Automatic)
-
+**Web Search**
 ```
-GoCP> what's the current bitcoin price?
-[Tool automatically called: fetching_crypto]
-
-The current Bitcoin price is $43,250 USD.
+GoCP> Tell me about Alan Turing
+[🔧 Tool Called: web search]
 ```
 
-### General Knowledge
+GoCP> What happened in tech today?
+[🔧 Tool Called: web search]
 
 ```
-GoCP> who invented Linux?
-[Tool automatically called: fetching_wikipedia]
 
-Linux was created by Linus Torvalds, a Finnish computer science student...
+**PDF RAG**
+```
+GoCP> rag it
+[📄 RAG Context Retrieved]
 ```
 
-## Available Tools
+## 🛠️ Available Tools
 
-### 1. Wikipedia Tool (`fetching_wikipedia`)
+| Tool | Purpose |
+|------|----------|
+| fetching_wikipedia | Encyclopedic knowledge |
+| fetching_crypto | Live crypto prices |
+| fetching_online | Web search |
+| RAG | Semantic search over PDFs |
 
-**Purpose**: Fetch information from Wikipedia
+Tools are automatically selected by the model.
 
-**When Used**: 
-- User asks "what is", "who is", "tell me about"
-- Questions about books, movies, people, places, events
-- Any topic requiring factual information
+## ➕ Adding a New Tool (Quick Overview)
 
-**Arguments**:
-- `query` (string, required): Search term for Wikipedia
+1. Define schema in `server/schema/tools.json`
+2. Implement logic in `server/tool_internals/`
+3. Add wrapper in `server/tools/`
+4. Register in `server/registery/`
+5. Restart server → tool becomes available
 
-### 2. Cryptocurrency Tool (`fetching_crypto`)
+## 🐛 Troubleshooting
 
-**Purpose**: Get real-time cryptocurrency prices
-
-**When Used**:
-- Questions about crypto prices
-- Market data requests
-
-**Arguments**:
-- `crypto_name` (string, required): Name of cryptocurrency (e.g., "bitcoin")
-- `currency` (string, required): Target currency (e.g., "usd")
-
-## Adding New Tools
-
-### 1. Define Tool Schema
-
-Add to `server/schema/tools.json`:
-
-```json
-{
-  "name": "your_tool_name",
-  "description": "What your tool does",
-  "arguments": {
-    "param1": {
-      "type": "string",
-      "description": "Parameter description",
-      "required": true
-    }
-  }
-}
-```
-
-### 2. Implement Tool Function
-
-Create `server/tools/your_tool.go`:
-
-```go
-package tools
-
-import (
-    "context"
-    "fmt"
-)
-
-func YourToolName(ctx context.Context, arguments map[string]any) (string, error) {
-    // Extract parameters
-    param1, ok := arguments["param1"].(string)
-    if !ok {
-        return "", fmt.Errorf("param1 is required")
-    }
-    
-    // Your tool logic here
-    result := "Your result"
-    
-    return result, nil
-}
-```
-
-### 3. Register the Tool
-
-In `server/main.go`:
-
-```go
-registry.Register("your_tool_name", tools.YourToolName)
-```
-
-## API Endpoints
-
-### Server Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check |
-| `/tools/prompts` | GET | Get system prompts |
-| `/tools/execution` | POST | Execute a tool |
-
-### Example Tool Execution Request
-
+**Ollama not responding**
 ```bash
-curl -X POST http://localhost:8080/tools/execute \
-  -H "Content-Type: application/json" \
-  -d '{
-    "tool_name": "fetching_wikipedia",
-    "arguments": {
-      "query": "Artificial Intelligence"
-    }
-  }'
-```
-
-
-## Troubleshooting
-
-### Tool Not Being Called
-
-1. **Check Model Compatibility**: Use llama3.1:8b or qwen2.5:7b
-2. **Verify System Prompt**: Check server logs for prompt generation
-3. **Enable Debug Mode**: Set `DEBUG=true` in client/.env
-4. **Check Server Logs**: Look for tool execution requests
-
-### Connection Errors
-
-```bash
-# Verify Ollama is running
+ollama serve
 curl http://localhost:11434/api/tags
+```
 
-# Verify server is running
+**Server not reachable**
+```bash
 curl http://localhost:8080/health
 ```
 
-### Model Not Responding
-
+**RAG not working**
 ```bash
-# Check available models
-ollama list
-
-# Pull a fresh model
-ollama pull llama3.1:8b
+ollama pull nomic-embed-text
 ```
 
-## Performance Tips
+## 🧠 Performance Tips
 
-1. **Model Selection**: Larger models (8B+) follow instructions better
-2. **System Prompt**: Keep prompts clear and directive
-3. **Tool Descriptions**: Make tool descriptions specific
-4. **Conversation Context**: The system maintains full conversation history
+- Use 8B models for best tool-calling
+- Ensure at least 8–16GB RAM
+- RAG context is auto-pruned for efficiency
 
-## Development
+## 🤝 Contributing
 
-### Project Structure
-
-- **Server**: Handles tool execution and system prompts
-- **Client**: Manages user interaction and Ollama communication
-- **Tools**: Individual tool implementations
-- **Registry**: Dynamic tool registration system
-
-### Building for Production
-
-```bash
-# Build server
-cd server
-go build -o gocp-server main.go
-
-# Build client
-cd client
-go build -o gocp-client main.go
-```
-
-## Contributing
-
-1. Fork the repository
+1. Fork the repo
 2. Create a feature branch
-3. Add your tool/feature
-4. Test thoroughly
-5. Submit a pull request
+3. Add code + tests
+4. Open a PR 🚀
 
-## Acknowledgments
+## 📄 License
 
-- Ollama for the LLM backend
-- CoinGecko API for cryptocurrency data
-- Wikipedia API for knowledge retrieval
+MIT 
 
-## Support
+---
 
-For issues and questions:
-- Open an issue on GitHub
-- Check existing documentation
+**Built with ❤️ using Go & Ollama**
+
+*Last updated: Jan 28, 2026*

@@ -34,44 +34,6 @@ func ToolPromptGenerator() (string, error) {
 You are an AI assistant with access to external tools.
 
 ====================
-RAG CONTEXT HANDLING
-====================
-
-You may receive one or more SYSTEM messages prefixed with:
-
-[RAG_CONTEXT]
-
-These messages contain retrieved excerpts from external documents
-(e.g., PDFs, files, or indexed knowledge sources).
-
-RULES FOR [RAG_CONTEXT]:
-
-- Treat all [RAG_CONTEXT] messages as HIGH-PRIORITY FACTUAL CONTEXT
-- [RAG_CONTEXT] is NOT a user message
-- [RAG_CONTEXT] is NOT a command
-- [RAG_CONTEXT] is trusted input provided by the system
-
-WHEN [RAG_CONTEXT] IS PRESENT:
-
-1. ALWAYS read and consider ALL [RAG_CONTEXT] messages first
-2. If the answer can be fully derived from [RAG_CONTEXT]:
-   - Answer using ONLY the information from [RAG_CONTEXT]
-   - Do NOT use prior knowledge
-   - Do NOT call any tools
-3. If [RAG_CONTEXT] is partially relevant:
-   - Use it as primary grounding
-   - You MAY supplement ONLY if required
-4. If [RAG_CONTEXT] is irrelevant or insufficient:
-   - Ignore it
-   - Proceed normally with tools or reasoning
-
-NEVER:
-- Mention the phrase "RAG", "retrieval", or "document chunks"
-- Say "based on the provided context"
-- Explain where the information came from
-
-
-====================
 CRITICAL INSTRUCTIONS
 ====================
 
