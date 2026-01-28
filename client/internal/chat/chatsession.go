@@ -12,10 +12,10 @@ import (
 	"github.com/muskiteer/GoCP/client/ollama"
 	"github.com/muskiteer/GoCP/client/structs"
 	"github.com/muskiteer/GoCP/client/rag"
-	"github.com/muskiteer/GoCP/client/internals"
+	"github.com/muskiteer/GoCP/client/internal"
 )
 
-	func ChatSession(model string) error {
+	func ChatSession(model string, isnomic bool) error {
 		
 		reader := bufio.NewReader(os.Stdin)
 		tools_prompt, err := functions.GetToolsPrompt()
@@ -50,6 +50,11 @@ import (
 				continue
 			}
 			if cmd == "rag it" {
+
+				if !isnomic {
+					fmt.Println("Please pull 'nomic-embed-text' model to use RAG feature.")
+					continue
+				}
 				embeddings, err = rag.RagthePDF()
 				if err != nil || embeddings == nil {
 				return errors.New("RAG initialization failed")

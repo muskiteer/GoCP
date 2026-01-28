@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"github.com/joho/godotenv"
-	"github.com/muskiteer/GoCP/client/internals"
-	"github.com/muskiteer/GoCP/client/internals/chat"
+	"github.com/muskiteer/GoCP/client/internal"
+	"github.com/muskiteer/GoCP/client/internal/chat"
 )
 
 
@@ -24,18 +24,25 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	log.Println("Ollama server is running")
+
+
+	
 
 	model, err := internals.SelectModel(models)
 	if err != nil {
 		log.Fatal("Model selection cancelled")
 	}
-
 	log.Printf("Using model: %s\n", model)
+	isnomic := internals.CheckNomicModel(models)
+
+	if !isnomic {
+		log.Fatal("Nomic embedding model not found. Please pull 'nomic-embed-text' model. for using the RAG feature.")
+	}
+
 	
 	log.Println("Starting chat session. Type 'exit' to quit.")
-	err = chat.ChatSession(model)
+	err = chat.ChatSession(model, isnomic)
 	if err != nil {
 		log.Fatal(err)
 	}	

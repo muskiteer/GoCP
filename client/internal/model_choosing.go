@@ -52,3 +52,12 @@ func SelectModel(models []string) (string, error) {
 	_, result, err := prompt.Run()
 	return result, err
 }
+
+func CheckNomicModel(models []string) bool {
+	for _, m := range models {
+		if strings.HasPrefix(m, "nomic-embed-text") {
+			return true
+		}
+	}
+	return false
+}

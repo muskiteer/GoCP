@@ -3,7 +3,7 @@ package rag
 import (
 	"errors"
 
-	"github.com/muskiteer/GoCP/client/internals"
+	"github.com/muskiteer/GoCP/client/internal"
 	"github.com/muskiteer/GoCP/client/structs"
 )
 
