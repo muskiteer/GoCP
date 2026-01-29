@@ -90,7 +90,9 @@ You'll be prompted to select a model and can start chatting immediately.
 
 **Ask Questions (Auto Tool Calling)**
 ```
-
+GoCP> What happened in tech today?
+[🔧 Tool Called: web search]
+```
 
 **Crypto Prices**
 ```
@@ -104,11 +106,6 @@ GoCP> Tell me about Alan Turing
 [🔧 Tool Called: web search]
 ```
 
-GoCP> What happened in tech today?
-[🔧 Tool Called: web search]
-
-```
-
 **PDF RAG**
 ```
 GoCP> rag it
@@ -118,7 +115,6 @@ GoCP> rag it
 **To Exit**
 ```
 GoCP> exit
-
 ```
 
 ## 🛠️ Available Tools
@@ -164,16 +160,50 @@ ollama pull nomic-embed-text
 - Ensure at least 8–16GB RAM
 - RAG context is auto-pruned for efficiency
 
+## 🔮 Futures (Roadmap)
+
+Planned and upcoming enhancements for GoCP:
+
+### 📈 Stocks, Commodities & Metals
+
+- Local symbol registry (stocks, ETFs, metals)
+- Asset name → symbol resolution (no hallucination)
+- Futures contracts support (e.g. GC=F, CL=F)
+- Exchange-aware resolution (NASDAQ, NYSE, NSE)
+
+### 🧠 Smarter RAG
+
+- Multi-PDF indexing
+- Chunk relevance scoring
+- Persistent document memory per session
+- Hybrid RAG (local + web)
+
+### 🧰 Tooling Improvements
+
+- Tool routing enforcement at code level
+- Tool confidence scoring
+- Pluggable tool backends
+- Rate-limit aware fallbacks
+
+### ⚡ Performance & UX
+
+- Streaming responses
+- Better context pruning
+- Session save / restore
+- Configurable memory depth
+
+### 🛡️ Reliability & Safety
+
+- Zero-hallucination symbol policy
+- Explicit clarification on ambiguity
+- Deterministic tool execution
+
 ## 🤝 Contributing
 
 1. Fork the repo
 2. Create a feature branch
 3. Add code + tests
 4. Open a PR 🚀
-
-## 📄 License
-
-MIT 
 
 ---
 
