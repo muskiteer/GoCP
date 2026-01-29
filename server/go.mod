@@ -7,6 +7,7 @@ toolchain go1.24.12
 require (
 	github.com/PuerkitoBio/goquery v1.11.0
 	github.com/google/uuid v1.6.0
+	github.com/joho/godotenv v1.5.1
 )
 
 require (
