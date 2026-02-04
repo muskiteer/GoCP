@@ -37,7 +37,7 @@ func main() {
 	isnomic := internals.CheckNomicModel(models)
 
 	if !isnomic {
-		log.Fatal("Nomic embedding model not found. Please pull 'nomic-embed-text' model. for using the RAG feature.")
+		log.Println("Nomic embedding model not found. Please pull 'nomic-embed-text' model. for using the RAG feature.")
 	}
 
 	

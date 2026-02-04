@@ -3,11 +3,12 @@ package internals
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
 	"github.com/muskiteer/GoCP/client/structs"
-	
+
 	"github.com/manifoldco/promptui"
 )
 
@@ -33,19 +34,29 @@ func FetchModels() ([]string, error) {
 
 	var models []string
 	for _, m := range tags.Models {
-		if strings.HasPrefix(m.Name, "nomic-embed-text") {
-			continue
-		}
+		// if strings.HasPrefix(m.Name, "nomic-embed-text") {
+		// 	continue
+		// }
 		models = append(models, m.Name)
+		log.Println("Found model:", m.Name)
 	}
 
 	return models, nil
 }
 
 func SelectModel(models []string) (string, error) {
+filtered := make([]string, 0, len(models))
+
+	for _, m := range models {
+		if !strings.HasPrefix(m, "nomic-embed-text") {
+			filtered = append(filtered, m)
+		}
+	}
+
+	// models = filtered
 	prompt := promptui.Select{
 		Label: "Select Ollama model",
-		Items: models,
+		Items: filtered,
 		Size:  10,
 	}
 
@@ -55,7 +66,9 @@ func SelectModel(models []string) (string, error) {
 
 func CheckNomicModel(models []string) bool {
 	for _, m := range models {
+		// log.Println(m)
 		if strings.HasPrefix(m, "nomic-embed-text") {
+			// log.Println("herer dsjf;ldsjfa")
 			return true
 		}
 	}
